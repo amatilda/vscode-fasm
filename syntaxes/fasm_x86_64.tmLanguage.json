@@ -13,7 +13,12 @@
 		"include": "#numbers"
 	},
 	{
-		"include": "#comments"
+		"name": "comment.line.double-slash.documentation.c",
+		"match": "\\s?(;.*)",
+		"captures": {
+			"0": { "name": "comment.line.double-slash.documentation.c" }
+		},
+		"comment": "Comments"
 	},
 	{
 		"include": "#strings"
@@ -211,22 +216,6 @@
 				"1": { "name": "support.function.aes" }
 				},
 				"comment": "Function SSE4 case insensitive"
-			}]
-		},
-		"comments":
-		{
-			"patterns": [
-			{
-				"name": "comment.line.double-slash.documentation.c",
-				"begin": "\\s?(;.*)",
-				"beginCaptures":
-				{
-					"1":
-					{
-						"name": "punctuation.definition.comment.documentation.c"
-					}
-				},
-				"end": ""
 			}]
 		},
 		"numbers":

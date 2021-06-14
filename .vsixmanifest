@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Language="en-US" Id="vscode-fasm" Version="0.0.1" Publisher="Z-WaveMe"/>
+    <Identity Language="en-US" Id="vscode-fasm" Version="0.0.2" Publisher="Z-WaveMe"/>
     <DisplayName>Z-Uno</DisplayName>
     <Description xml:space="preserve">Fasm highlight for Visual Studio Code</Description>
     <Tags>fasm,asm,x86_64</Tags>
