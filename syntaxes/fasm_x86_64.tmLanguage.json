@@ -13,15 +13,18 @@
 		"include": "#numbers"
 	},
 	{
+		"include": "#strings"
+	},
+	{
+		"include": "#sections"
+	},
+	{
 		"name": "comment.line.double-slash.documentation.c",
 		"match": "\\s?(;.*)",
 		"captures": {
 			"0": { "name": "comment.line.double-slash.documentation.c" }
 		},
 		"comment": "Comments"
-	},
-	{
-		"include": "#strings"
 	},
 	{
 		"name": "storage.type",
@@ -36,29 +39,13 @@
 		"match": "^[\\t| ]{0,}(include|format|entry)\\b"
 	},
 	{
-		"name": "entity.name.section",
-		"match": "section\\s+(('.*')|(\".*\")).*(?=;)",
-		"captures": {
-		"1": { "name": "entity.name.section" }
-		},
-		"comment": "Section"
-	},
-	{
-		"name": "entity.name.section",
-		"match": "section\\s+(('.*')|(\".*\")).*",
-		"captures": {
-		"1": { "name": "entity.name.section" }
-		},
-		"comment": "Section"
-	},
-	{
 		"name": "keyword.control",
 		"match": "(\\[|\\]|,|:|\\+|-|\\*|/)",
 		"comment": "Simbols"
 	},
 	{
 		"name": "support.function.constant",
-		"match": "\\b[_A-Z]{1,}\\b",
+		"match": "\\b[A-Z]{1,1}[_A-Z0-9]{0,}\\b",
 		"captures": {
 			"0": { "name": "support.function.constant" }
 		},
@@ -66,6 +53,66 @@
 	}],
 	"repository":
 	{
+		"sections":
+		{
+			"patterns": [
+			{
+				"match": "(^[\\t| ]{0,}section\\s+)(('.*')|(\".*\"))(.*?)((?=;)|(\\n))",
+				"captures":
+				{
+					"1":
+					{
+						"name": "entity.name.section"
+					},
+					"2":
+					{
+						"patterns": [
+						{
+							"include": "#strings"
+						}]
+					},
+					"5":
+					{
+						"name": "entity.name.section"
+					}
+				},
+				"comment": "Section"
+			}]
+		},
+		"strings":
+		{
+			"patterns": [
+			{
+				"match": "(')(.*)(')",
+				"captures":
+				{
+					"0":
+					{
+						"name": "keyword.control"
+					},
+					"2":
+					{
+						"name": "string.quoted.double.c"
+					}
+				},
+				"comment": "Quoted single"
+			},
+			{
+				"match": "(\")(.*)(\")",
+				"captures":
+				{
+					"0":
+					{
+						"name": "keyword.control"
+					},
+					"2":
+					{
+						"name": "string.quoted.double.c"
+					}
+				},
+				"comment": "Quoted double"
+			}]
+		},
 		"registers":
 		{
 			"patterns": [
@@ -503,115 +550,26 @@
 							}
 						},
 						{
+							"match": "([0-9]{1,1}[a-fA-F0-9]{0,})(h)",
+							"captures":
+							{
+								"1":
+								{
+									"name": "constant.numeric.hexadecimal.c"
+								},
+								"2":
+								{
+									"name": "keyword.other.unit.hexadecimal.c"
+								}
+							}
+						},
+						{
 							"match": "(?:(?:[0-9a-zA-Z_\\.]|')|(?<=[eEpP])[+-])+",
 							"name": "invalid.illegal.constant.numeric"
 						}]
 					}]
 				}
 			}
-		},
-		"line_continuation_character":
-		{
-			"patterns": [
-			{
-				"match": "(\\\\)\\n",
-				"captures":
-				{
-					"1":
-					{
-						"name": "constant.character.escape.line-continuation.c"
-					}
-				}
-			}]
-		},
-		"string_escaped_char":
-		{
-			"patterns": [
-			{
-				"match": "(?x)\\\\ (\n\\\\\t\t\t |\n[abefnprtv'\"?]   |\n[0-3]\\d{,2}\t |\n[4-7]\\d?\t\t|\nx[a-fA-F0-9]{,2} |\nu[a-fA-F0-9]{,4} |\nU[a-fA-F0-9]{,8} )",
-				"name": "constant.character.escape.c"
-			},
-			{
-				"match": "\\\\.",
-				"name": "invalid.illegal.unknown-escape.c"
-			}]
-		},
-		"string_placeholder":
-		{
-			"patterns": [
-			{
-				"match": "(?x) %\n(\\d+\\$)?\t\t\t\t\t\t   # field (argument #)\n[#0\\- +']*\t\t\t\t\t\t  # flags\n[,;:_]?\t\t\t\t\t\t\t  # separator character (AltiVec)\n((-?\\d+)|\\*(-?\\d+\\$)?)?\t\t  # minimum field width\n(\\.((-?\\d+)|\\*(-?\\d+\\$)?)?)?\t# precision\n(hh|h|ll|l|j|t|z|q|L|vh|vl|v|hv|hl)? # length modifier\n[diouxXDOUeEfFgGaACcSspn%]\t\t   # conversion type",
-				"name": "constant.other.placeholder.c"
-			},
-			{
-				"match": "(%)(?!\"\\s*(PRI|SCN))",
-				"captures":
-				{
-					"1":
-					{
-						"name": "invalid.illegal.placeholder.c"
-					}
-				}
-			}]
-		},
-		"strings":
-		{
-			"patterns": [
-			{
-				"begin": "\"",
-				"beginCaptures":
-				{
-					"0":
-					{
-						"name": "punctuation.definition.string.begin.c"
-					}
-				},
-				"end": "\"",
-				"endCaptures":
-				{
-					"0":
-					{
-						"name": "punctuation.definition.string.end.c"
-					}
-				},
-				"name": "string.quoted.double.c",
-				"patterns": [
-				{
-					"include": "#string_escaped_char"
-				},
-				{
-					"include": "#string_placeholder"
-				},
-				{
-					"include": "#line_continuation_character"
-				}]
-			},
-			{
-				"begin": "'",
-				"beginCaptures":
-				{
-					"0":
-					{
-						"name": "punctuation.definition.string.begin.c"
-					}
-				},
-				"end": "'",
-				"endCaptures":
-				{
-					"0":
-					{
-						"name": "punctuation.definition.string.end.c"
-					}
-				},
-				"name": "string.quoted.single.c",
-				"patterns": [
-				{
-					"include": "#string_escaped_char"
-				},
-				{
-					"include": "#line_continuation_character"
-				}]
-			}]
 		}
 	}
 }
