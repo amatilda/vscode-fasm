@@ -263,6 +263,14 @@
 				"1": { "name": "support.function.aes" }
 				},
 				"comment": "Function SSE4 case insensitive"
+			},
+			{
+				"name": "support.function.fpu",
+				"match": "\\b(?i:f2xm1|fabs|fadd|faddp|fbld|fbstp|fchs|fcmovb|fcmovbe|fcmove|fcmovnb|fcmovnbe|fcmovne|fcmovnu|fcmovu|fclex|fcom|fcomi|fcomip|fcomp|fcompp|fcos|fdecstp|fdiv|fdivp|fdivr|fdivrp|ffree|fiadd|ficom|ficomp|fidiv|fidivr|fild|fimul|fincstp|finit|fist|fisub|fisubr|fld|fld1|fldl2t|fldl2e|fldenv|fldenvd|fldenvw|fldpi|fldlg2|fldln2|fldz|fmul|fnclex|fninit|fnop|fnsave|fnsaved|fnsavew|fnstcw|fnstenv|fnstenvw|fnstsw|fpatan|fprem|frndint|frstor|frstord|frstorw|fsave|fsaved|fsavew|fscale|fsin|fsincos|fsqrt|fst|fstcw|fstenv|fstenvw|fstp|fstsw|fsub|fsubr|ftst|fucom|fucomi|fucomip|fucomp|fucompp|fwait|fxch|fxtract|fyl2x|fyl2xp1)\\b",
+				"captures": {
+				"1": { "name": "support.function.fpu" }
+				},
+				"comment": "Function FPU case insensitive"
 			}]
 		},
 		"numbers":
